@@ -33,6 +33,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\Toolbox\Sanitizer;
+
 class PluginSccmSccm {
 
    var $devices;
@@ -107,7 +109,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = $this->cleanValue($value);
+            $tmp[$key] = Sanitizer::sanitize($value, true);
          }
          $data[] = $tmp;
 
@@ -117,13 +119,6 @@ class PluginSccmSccm {
       $PluginSccmSccmdb->disconnect();
 
       return $data;
-   }
-
-   function cleanValue($value) {
-      $value = Html::clean($value);
-      $value = Toolbox::clean_cross_side_scripting_deep($value);
-      $value = Toolbox::addslashes_deep($value);
-      return $value;
    }
 
    function getNetwork($deviceid, $limit = 99999999) {
@@ -157,7 +152,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = $this->cleanValue($value);
+            $tmp[$key] = Sanitizer::sanitize($value, true);
          }
          $data[] = $tmp;
 
@@ -203,7 +198,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = $this->cleanValue($value);
+            $tmp[$key] = Sanitizer::sanitize($value, true);
          }
          $data[] = $tmp;
 
@@ -251,7 +246,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = $this->cleanValue($value);
+            $tmp[$key] = Sanitizer::sanitize($value, true);
          }
          $data[] = $tmp;
 
@@ -293,7 +288,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = $this->cleanValue($value);
+            $tmp[$key] = Sanitizer::sanitize($value, true);
          }
          $data[] = $tmp;
 
@@ -331,7 +326,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = $this->cleanValue($value);
+            $tmp[$key] = Sanitizer::sanitize($value, true);
          }
          $data[] = $tmp;
 
@@ -378,7 +373,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = $this->cleanValue($value);
+            $tmp[$key] = Sanitizer::sanitize($value, true);
          }
          $data[] = $tmp;
 
@@ -419,7 +414,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = $this->cleanValue($value);
+            $tmp[$key] = Sanitizer::sanitize($value, true);
          }
          $data[] = $tmp;
 
