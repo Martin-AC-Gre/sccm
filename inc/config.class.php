@@ -148,11 +148,17 @@ class PluginSccmConfig extends CommonDBTM {
          if (!$DB->fieldExists($table, 'is_password_sodium_encrypted')) {
             $config = self::getInstance();
             if (!empty($config->fields['sccmdb_password'])) {
+               $key = new GLPIKey();
                $migration->addPostQuery(
                   $DB->buildUpdate(
                      'glpi_plugin_sccm_configs',
                      [
-                        'sccmdb_password' => Toolbox::sodiumEncrypt(Toolbox::decrypt($config->getField('sccmdb_password'), GLPIKEY))
+                        'sccmdb_password' => Toolbox::sodiumEncrypt(
+                           $key->decryptUsingLegacyKey(
+                              $config->fields['sccmdb_password'],
+                              GLPIKEY
+                           )
+                        )
                      ],
                      [
                         'id' => 1,
