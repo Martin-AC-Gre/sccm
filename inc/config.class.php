@@ -71,7 +71,7 @@ class PluginSccmConfig extends CommonDBTM {
 
    function prepareInputForUpdate($input) {
       if (isset($input["sccmdb_password"]) AND !empty($input["sccmdb_password"])) {
-         $input["sccmdb_password"] = Toolbox::sodiumEncrypt(stripslashes($input["sccmdb_password"]));
+         $input["sccmdb_password"] = (new GLPIKey())->encrypt($input["sccmdb_password"]);
       }
 
       return $input;
@@ -107,12 +107,10 @@ class PluginSccmConfig extends CommonDBTM {
          $DB->queryOrDie($query, __("Error when using glpi_plugin_sccm_configs table.", "sccm")
                               . "<br />".$DB->error());
 
-         $sccmdb_password = Toolbox::sodiumEncrypt("");
-
          $query = "INSERT INTO `$table`
                          (id, date_mod, sccmdb_host, sccmdb_dbname,
                            sccmdb_user, sccmdb_password, fusioninventory_url)
-                   VALUES (1, NOW(), 'srv_sccm','bdd_sccm','user_sccm','".$sccmdb_password."',
+                   VALUES (1, NOW(), 'srv_sccm','bdd_sccm','user_sccm','',
                            'http://glpi/plugins/fusioninventory/front/communication.php')";
 
          $DB->queryOrDie($query, __("Error when using glpi_plugin_sccm_configs table.", "sccm")
@@ -153,10 +151,9 @@ class PluginSccmConfig extends CommonDBTM {
                   $DB->buildUpdate(
                      'glpi_plugin_sccm_configs',
                      [
-                        'sccmdb_password' => Toolbox::sodiumEncrypt(
+                        'sccmdb_password' => $key->encrypt(
                            $key->decryptUsingLegacyKey(
-                              $config->fields['sccmdb_password'],
-                              GLPIKEY
+                              $config->fields['sccmdb_password']
                            )
                         )
                      ],
@@ -218,7 +215,7 @@ class PluginSccmConfig extends CommonDBTM {
       echo "</td></tr>\n";
 
       $password = $config->getField('sccmdb_password');
-      $password = Toolbox::sodiumDecrypt($password);
+      $password = Html::entities_deep((new GLPIKey())->decrypt($password));
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__("Password", "sccm")."</td><td>";
       echo "<input type='password' name='sccmdb_password' value='$password' autocomplete='off'>";
