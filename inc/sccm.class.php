@@ -109,7 +109,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = Sanitizer::sanitize($value, true);
+            $tmp[$key] = Sanitizer::sanitize($value);
          }
          $data[] = $tmp;
 
@@ -152,7 +152,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = Sanitizer::sanitize($value, true);
+            $tmp[$key] = Sanitizer::sanitize($value);
          }
          $data[] = $tmp;
 
@@ -198,7 +198,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = Sanitizer::sanitize($value, true);
+            $tmp[$key] = Sanitizer::sanitize($value);
          }
          $data[] = $tmp;
 
@@ -246,7 +246,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = Sanitizer::sanitize($value, true);
+            $tmp[$key] = Sanitizer::sanitize($value);
          }
          $data[] = $tmp;
 
@@ -288,7 +288,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = Sanitizer::sanitize($value, true);
+            $tmp[$key] = Sanitizer::sanitize($value);
          }
          $data[] = $tmp;
 
@@ -326,7 +326,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = Sanitizer::sanitize($value, true);
+            $tmp[$key] = Sanitizer::sanitize($value);
          }
          $data[] = $tmp;
 
@@ -373,7 +373,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = Sanitizer::sanitize($value, true);
+            $tmp[$key] = Sanitizer::sanitize($value);
          }
          $data[] = $tmp;
 
@@ -414,7 +414,7 @@ class PluginSccmSccm {
          $tmp = [];
 
          foreach ($tab as $key => $value) {
-            $tmp[$key] = Sanitizer::sanitize($value, true);
+            $tmp[$key] = Sanitizer::sanitize($value);
          }
          $data[] = $tmp;
 
