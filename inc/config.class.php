@@ -85,20 +85,20 @@ class PluginSccmConfig extends CommonDBTM {
       if (!$DB->tableExists($table)) {
 
          $query = "CREATE TABLE `". $table."`(
-                     `id` int(11) NOT NULL,
+                     `id` int NOT NULL,
                      `sccmdb_host` VARCHAR(255) NULL,
                      `sccmdb_dbname` VARCHAR(255) NULL,
                      `sccmdb_user` VARCHAR(255) NULL,
                      `sccmdb_password` VARCHAR(255) NULL,
                      `fusioninventory_url` VARCHAR(255) NULL,
-                     `active_sync` tinyint(1) NOT NULL default '0',
-                     `verify_ssl_cert` tinyint(1) NOT NULL,
-                     `use_auth_ntlm` tinyint(1) NOT NULL,
-                     `unrestricted_auth` tinyint(1) NOT NULL,
-                     `use_auth_info` tinyint(1) NOT NULL,
+                     `active_sync` tinyint NOT NULL default '0',
+                     `verify_ssl_cert` tinyint NOT NULL,
+                     `use_auth_ntlm` tinyint NOT NULL,
+                     `unrestricted_auth` tinyint NOT NULL,
+                     `use_auth_info` tinyint NOT NULL,
                      `auth_info` VARCHAR(255) NULL,
-                     `is_password_sodium_encrypted` tinyint(1) NOT NULL default '1',
-                     `use_lasthwscan` tinyint(1) NOT NULL,
+                     `is_password_sodium_encrypted` tinyint NOT NULL default '1',
+                     `use_lasthwscan` tinyint NOT NULL,
                      `date_mod` timestamp NULL default NULL,
                      `comment` text,
                      PRIMARY KEY  (`id`)
@@ -119,22 +119,22 @@ class PluginSccmConfig extends CommonDBTM {
       } else {
 
          if (!$DB->fieldExists($table, 'verify_ssl_cert')) {
-            $migration->addField("glpi_plugin_sccm_configs", "verify_ssl_cert", "tinyint(1) NOT NULL");
+            $migration->addField("glpi_plugin_sccm_configs", "verify_ssl_cert", "tinyint NOT NULL");
             $migration->migrationOneTable('glpi_plugin_sccm_configs');
          }
 
          if (!$DB->fieldExists($table, 'use_auth_ntlm')) {
-            $migration->addField("glpi_plugin_sccm_configs", "use_auth_ntlm", "tinyint(1) NOT NULL default '0'");
+            $migration->addField("glpi_plugin_sccm_configs", "use_auth_ntlm", "tinyint NOT NULL default '0'");
             $migration->migrationOneTable('glpi_plugin_sccm_configs');
          }
 
          if (!$DB->fieldExists($table, 'unrestricted_auth')) {
-            $migration->addField("glpi_plugin_sccm_configs", "unrestricted_auth", "tinyint(1) NOT NULL default '0'");
+            $migration->addField("glpi_plugin_sccm_configs", "unrestricted_auth", "tinyint NOT NULL default '0'");
             $migration->migrationOneTable('glpi_plugin_sccm_configs');
          }
 
          if (!$DB->fieldExists($table, 'use_auth_info')) {
-            $migration->addField("glpi_plugin_sccm_configs", "use_auth_info", "tinyint(1) NOT NULL default '0'");
+            $migration->addField("glpi_plugin_sccm_configs", "use_auth_info", "tinyint NOT NULL default '0'");
             $migration->migrationOneTable('glpi_plugin_sccm_configs');
          }
 
@@ -163,12 +163,12 @@ class PluginSccmConfig extends CommonDBTM {
                      )
                   );
             }
-            $migration->addField("glpi_plugin_sccm_configs", "is_password_sodium_encrypted", "tinyint(1) NOT NULL default '1'");
+            $migration->addField("glpi_plugin_sccm_configs", "is_password_sodium_encrypted", "tinyint NOT NULL default '1'");
             $migration->migrationOneTable('glpi_plugin_sccm_configs');
          }
 
          if (!$DB->fieldExists($table, 'use_lasthwscan')) {
-            $migration->addField("glpi_plugin_sccm_configs", "use_lasthwscan", "tinyint(1) NOT NULL default '0'");
+            $migration->addField("glpi_plugin_sccm_configs", "use_lasthwscan", "tinyint NOT NULL default '0'");
             $migration->migrationOneTable('glpi_plugin_sccm_configs');
          }
       }
