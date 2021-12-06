@@ -84,6 +84,9 @@ class PluginSccmConfig extends CommonDBTM {
 
       if (!$DB->tableExists($table)) {
 
+         $default_charset = DBConnection::getDefaultCharset();
+         $default_collation = DBConnection::getDefaultCollation();
+
          $query = "CREATE TABLE `". $table."`(
                      `id` int NOT NULL,
                      `sccmdb_host` VARCHAR(255) NULL,
@@ -102,7 +105,7 @@ class PluginSccmConfig extends CommonDBTM {
                      `date_mod` timestamp NULL default NULL,
                      `comment` text,
                      PRIMARY KEY  (`id`)
-                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                   ) ENGINE=InnoDB  DEFAULT CHARSET={$default_charset} COLLATE={$default_collation}";
 
          $DB->queryOrDie($query, __("Error when using glpi_plugin_sccm_configs table.", "sccm")
                               . "<br />".$DB->error());
