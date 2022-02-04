@@ -96,13 +96,13 @@ class PluginSccmConfig extends CommonDBTM {
                      `sccmdb_password` VARCHAR(255) NULL,
                      `fusioninventory_url` VARCHAR(255) NULL,
                      `active_sync` tinyint NOT NULL default '0',
-                     `verify_ssl_cert` tinyint NOT NULL,
-                     `use_auth_ntlm` tinyint NOT NULL,
-                     `unrestricted_auth` tinyint NOT NULL,
-                     `use_auth_info` tinyint NOT NULL,
+                     `verify_ssl_cert` tinyint NOT NULL default '0',
+                     `use_auth_ntlm` tinyint NOT NULL default '0',
+                     `unrestricted_auth` tinyint NOT NULL default '0',
+                     `use_auth_info` tinyint NOT NULL default '0',
                      `auth_info` VARCHAR(255) NULL,
                      `is_password_sodium_encrypted` tinyint NOT NULL default '1',
-                     `use_lasthwscan` tinyint NOT NULL,
+                     `use_lasthwscan` tinyint NOT NULL default '0',
                      `date_mod` timestamp NULL default NULL,
                      `comment` text,
                      PRIMARY KEY  (`id`)
@@ -123,7 +123,7 @@ class PluginSccmConfig extends CommonDBTM {
       } else {
 
          if (!$DB->fieldExists($table, 'verify_ssl_cert')) {
-            $migration->addField("glpi_plugin_sccm_configs", "verify_ssl_cert", "tinyint NOT NULL");
+            $migration->addField("glpi_plugin_sccm_configs", "verify_ssl_cert", "tinyint NOT NULL default '0'");
             $migration->migrationOneTable('glpi_plugin_sccm_configs');
          }
 
