@@ -80,15 +80,16 @@ class PluginSccmConfig extends CommonDBTM {
    static function install(Migration $migration) {
       global $DB;
 
+      $default_charset = DBConnection::getDefaultCharset();
+      $default_collation = DBConnection::getDefaultCollation();
+      $default_key_sign = method_exists('DBConnection', 'getDefaultPrimaryKeySignOption') ? DBConnection::getDefaultPrimaryKeySignOption() : '';
+
       $table = 'glpi_plugin_sccm_configs';
 
       if (!$DB->tableExists($table)) {
 
-         $default_charset = DBConnection::getDefaultCharset();
-         $default_collation = DBConnection::getDefaultCollation();
-
          $query = "CREATE TABLE `". $table."`(
-                     `id` int NOT NULL,
+                     `id` int {$default_key_sign} NOT NULL,
                      `sccmdb_host` VARCHAR(255) NULL,
                      `sccmdb_dbname` VARCHAR(255) NULL,
                      `sccmdb_user` VARCHAR(255) NULL,
