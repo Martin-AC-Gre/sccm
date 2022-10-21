@@ -640,13 +640,28 @@ class PluginSccmSccm {
                         $task->addVolume(1);
 
                         if ($PluginSccmConfig->getField('use_lasthwscan') == 1) {
-                           $data = PluginFusioninventoryAgent::getByDeviceID($tab['CSD-MachineID']);
-                           $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
-                           $a_computerextend = $pfInventoryComputerComputer->hasAutomaticInventory($data['computers_id']);
-                           if (count($a_computerextend) > 0) {
-                              $a_computerextend['last_fusioninventory_update'] = $tab['vWD-LastScan']->format('Y-m-d h:i');
-                              $pfInventoryComputerComputer->update($a_computerextend);
+                           if (str_contains($PluginSccmConfig->getField('inventory_server_url'), 'fusioninventory')
+                              && Plugin::isPluginActive("fusioninventory")) {
+                              $data = PluginFusioninventoryAgent::getByDeviceID($tab['CSD-MachineID']);
+                              $pfInventoryComputerComputer = new PluginFusioninventoryInventoryComputerComputer();
+                              $a_computerextend = $pfInventoryComputerComputer->hasAutomaticInventory($data['computers_id']);
+                              if (count($a_computerextend) > 0) {
+                                 $a_computerextend['last_fusioninventory_update'] = $tab['vWD-LastScan']->format('Y-m-d h:i');
+                                 $pfInventoryComputerComputer->update($a_computerextend);
+                              }
+                           } else {
+                              $agent = new Agent();
+                              if ($agent->getFromDBByCrit(["name" => $tab['CSD-MachineID']])) {
+                                 $asset = new $agent->fields['itemtype']();
+                                 if ($asset->getFromDB($agent->fields['items_id'])) {
+                                    $agent->update([
+                                       "id" => $agent->fields['id'],
+                                       "last_inventory_update" => $tab['vWD-LastScan']->format('Y-m-d h:i')
+                                    ]);
+                                 }
+                              }
                            }
+
                         }
                         Toolbox::logInFile('sccm', "Push OK - ".$tab['CSD-MachineID']." \n", true);
                      }
