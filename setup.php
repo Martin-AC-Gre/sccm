@@ -74,6 +74,18 @@ function plugin_version_sccm() {
             'min' => PLUGIN_SCCM_MIN_GLPI,
             'max' => PLUGIN_SCCM_MAX_GLPI,
          ],
+         'php'    => [
+            'exts'=> [
+               'sqlsrv'    => [
+                  'required'  => true,
+                  'function'  => 'sqlsrv_connect'
+               ],
+               'curl'      => [
+                  'required'  => true,
+                  'function'  => 'curl_init'
+               ]
+            ]
+         ]
       ]
    ];
 }
