@@ -73,9 +73,6 @@ function plugin_version_sccm() {
          'glpi'   => [
             'min' => PLUGIN_SCCM_MIN_GLPI,
             'max' => PLUGIN_SCCM_MAX_GLPI,
-            'plugins' => [
-               'fusioninventory',
-            ],
          ],
          'php'    => [
             'exts'=> [
