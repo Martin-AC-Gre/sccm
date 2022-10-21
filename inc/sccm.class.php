@@ -616,13 +616,13 @@ class PluginSccmSccm {
                      curl_setopt($ch, CURLOPT_USERPWD, $PluginSccmConfig->getField('auth_info'));
                   }
 
-                  curl_setopt($ch, CURLOPT_URL, $PluginSccmConfig->getField('fusioninventory_url'));
+                  curl_setopt($ch, CURLOPT_URL, $PluginSccmConfig->getField('inventory_server_url'));
                   curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: text/xml']);
                   curl_setopt($ch, CURLOPT_HEADER, 1);
                   curl_setopt($ch, CURLOPT_POST, 1);
                   curl_setopt($ch, CURLOPT_POSTFIELDS, $xmlFile->asXML());
                   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
-                  curl_setopt($ch, CURLOPT_REFERER, $PluginSccmConfig->getField('fusioninventory_url'));
+                  curl_setopt($ch, CURLOPT_REFERER, $PluginSccmConfig->getField('inventory_server_url'));
                   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                   $ch_result = curl_exec($ch);
                   if ($ch_result === false) {
