@@ -29,7 +29,7 @@
  * -------------------------------------------------------------------------
  */
 
-define("PLUGIN_SCCM_VERSION", "2.3.0");
+define("PLUGIN_SCCM_VERSION", "2.3.1");
 
 // Minimal GLPI version, inclusive
 define("PLUGIN_SCCM_MIN_GLPI", "10.0.0");
@@ -74,18 +74,6 @@ function plugin_version_sccm() {
             'min' => PLUGIN_SCCM_MIN_GLPI,
             'max' => PLUGIN_SCCM_MAX_GLPI,
          ],
-         'php'    => [
-            'exts'=> [
-               'sqlsrv'    => [
-                  'required'  => true,
-                  'function'  => 'sqlsrv_connect'
-               ],
-               'curl'      => [
-                  'required'  => true,
-                  'function'  => 'curl_init'
-               ]
-            ]
-         ]
       ]
    ];
 }

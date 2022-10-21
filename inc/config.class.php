@@ -94,7 +94,7 @@ class PluginSccmConfig extends CommonDBTM {
                      `sccmdb_dbname` VARCHAR(255) NULL,
                      `sccmdb_user` VARCHAR(255) NULL,
                      `sccmdb_password` VARCHAR(255) NULL,
-                     `fusioninventory_url` VARCHAR(255) NULL,
+                     `inventory_server_url` VARCHAR(255) NULL,
                      `active_sync` tinyint NOT NULL default '0',
                      `verify_ssl_cert` tinyint NOT NULL default '0',
                      `use_auth_ntlm` tinyint NOT NULL default '0',
@@ -113,9 +113,9 @@ class PluginSccmConfig extends CommonDBTM {
 
          $query = "INSERT INTO `$table`
                          (id, date_mod, sccmdb_host, sccmdb_dbname,
-                           sccmdb_user, sccmdb_password, fusioninventory_url)
+                           sccmdb_user, sccmdb_password, inventory_server_url)
                    VALUES (1, NOW(), 'srv_sccm','bdd_sccm','user_sccm','',
-                           'http://glpi/plugins/fusioninventory/front/communication.php')";
+                           'http://glpi/')";
 
          $DB->queryOrDie($query, __("Error when using glpi_plugin_sccm_configs table.", "sccm")
                                  . "<br />" . $DB->error());
@@ -175,6 +175,11 @@ class PluginSccmConfig extends CommonDBTM {
             $migration->addField("glpi_plugin_sccm_configs", "use_lasthwscan", "tinyint NOT NULL default '0'");
             $migration->migrationOneTable('glpi_plugin_sccm_configs');
          }
+
+         if (!$DB->fieldExists($table, 'glpi_url')) {
+            $migration->changeField("glpi_plugin_sccm_configs", "fusioninventory_url", "inventory_server_url", "string");
+            $migration->migrationOneTable('glpi_plugin_sccm_configs');
+         }
       }
 
       return true;
@@ -226,8 +231,8 @@ class PluginSccmConfig extends CommonDBTM {
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__("URL FusionInventory for injection", "sccm")."</td><td>";
-      echo Html::input('fusioninventory_url', ['value' => $config->getField('fusioninventory_url')]);
+      echo "<td>".__("Inventory server injection", "sccm")."</td><td>";
+      echo Html::input('inventory_server_url', ['value' => $config->getField('inventory_server_url')]);
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
@@ -256,7 +261,7 @@ class PluginSccmConfig extends CommonDBTM {
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__("Use LastHWScan as FusionInventory last inventory", "sccm")."</td><td>";
+      echo "<td>".__("Use LastHWScan as GLPI last inventory", "sccm")."</td><td>";
       Dropdown::showYesNo("use_lasthwscan", $config->getField('use_lasthwscan'));
       echo "</td></tr>\n";
 
